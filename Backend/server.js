@@ -1,27 +1,26 @@
-// backend/server.js
 const express = require('express');
 const next = require('next');
 
+const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const port = process.env.PORT || 3001;
-
 app.prepare().then(() => {
   const server = express();
 
-  // Example Express API route
-  server.get('/api/hello', (req, res) => {
-    res.json({ message: 'Hello from Express + Next.js backend!' });
+  // Custom route example (optional)
+  server.get('/custom', (req, res) => {
+    return app.render(req, res, '/custom'); // Renders pages/custom.js (or .jsx)
   });
 
-  // Let Next.js handle everything else
+  // Default catch-all handler to allow Next.js to handle all other routes
   server.all('*', (req, res) => {
     return handle(req, res);
   });
 
-  server.listen(port, () => {
-    console.log(`> Backend running at http://localhost:${port}`);
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${port}`);
   });
 });
