@@ -1,19 +1,13 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(express.json());
+console.log('Express app starting');
 
-app.get('/hello', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
+app.get('/api', (req, res) => {
+  console.log('GET /api');
+  res.json({ message: ['hello world', 'hello again'] });
 });
 
-// Catch-all for undefined routes
-app.all('*', (req, res) => {
-  res.status(404).json({ error: 'Not found' });
+app.listen(5050, () => {
+  console.log('Listening on port 5050');
 });
-
-app.listen(port, () => {
-  console.log(`Backend API listening at http://localhost:${port}`);
-});
-
