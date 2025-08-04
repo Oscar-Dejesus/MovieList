@@ -13,13 +13,10 @@ function App() {
 
   return (
     <div>
-      {(typeof backendData.message === 'undefined') ?(
-        <p>loading...</p>
-      ):(
-        backendData.message.map((m,index)=>(
-          <p key={index}>{m}</p>
-        ))
-      )}
+      {
+      backendData.message === undefined
+      ? <p>loading...</p> : backendData.message.map((m, index) => <p key={index}>{m}</p>)
+      }
     </div>
   );
 }
